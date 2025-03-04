@@ -22,13 +22,13 @@ export default withMermaid({
           },
         ],
       },
-      {
-        text: "Weekly",
-        items: fg.sync("weekly/*.md").map((path) => {
-          const name = basename(path, ".md");
-          return { text: name, link: `/weekly/${name}` };
-        }),
-      },
+      // {
+      //   text: "Weekly",
+      //   items: fg.sync("weekly/*.md").map((path) => {
+      //     const name = basename(path, ".md");
+      //     return { text: name, link: `/weekly/${name}` };
+      //   }),
+      // },
     ],
   },
   vite: {
