@@ -13,15 +13,15 @@ export default withMermaid({
         text: "Home",
         link: "/",
       },
-      {
-        text: "Notes",
-        items: [
-          {
-            text: "Static Program Analysis",
-            link: "/notes/spa",
-          },
-        ],
-      },
+      // {
+      //   text: "Notes",
+      //   items: [
+      //     {
+      //       text: "Static Program Analysis",
+      //       link: "/notes/spa",
+      //     },
+      //   ],
+      // },
       // {
       //   text: "Weekly",
       //   items: fg.sync("weekly/*.md").map((path) => {
