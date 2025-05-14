@@ -1,22 +1,22 @@
 :root {
-  --vp-font-family-base: "Noto Sans SC Thin";
-  --vp-font-family-mono: "Maple Mono CN";
-  --vp-c-brand-1: rgb(188, 207, 222);
-  --vp-c-brand-2: rgb(143, 168, 187);
+  --vp-font-family-base: Valkyrie, serif;
+  --vp-c-brand-1: rgb(27, 132, 197);
+  --vp-c-brand-2: rgb(95, 152, 196);
   --vp-c-brand-3: rgb(112, 146, 173);
   --vp-nav-height: 40px;
   --vp-c-gutter: #2e2e32;
   --vp-nav-bg-color: transparent;
+  --vp-code-block-bg: #f6f6f7AA;
+  --vp-code-lang-color: transparent;
 }
 
 body {
-  line-height: 1.5;
-  font-size: 18px;
+  line-height: 1.45;
+  font-size: 20px;
 }
 
 .dark .VPContent {
   color:rgb(237, 241, 245);
-  font-weight: 300;
 }
 
 mjx-container {
@@ -56,6 +56,11 @@ mjx-container {
 
 #VPContent > div > div > div.content {
   padding-bottom: 32px;
+
+  @media (min-width: 960px) {
+    padding-top: 16px;
+    padding-left: 48px;
+  }
 }
 
 :root {
@@ -80,5 +85,29 @@ mjx-container {
     background-color: #555;
     border-radius: 10px;
     border: 2px solid #2e2e32;
+  }
+}
+
+
+@font-face { font-family: Valkyrie; font-display: swap; src: url('./fonts/valkyrie_b_regular.woff2') format('woff2'); }
+@font-face { font-family: Valkyrie; font-display: swap; src: url('./fonts/valkyrie_b_italic.woff2') format('woff2'); font-style: italic; }
+@font-face { font-family: Valkyrie; font-display: swap; src: url('./fonts/valkyrie_b_bold.woff2') format('woff2'); font-weight: bold; }
+@font-face { font-family: Valkyrie; font-display: swap; src: url('./fonts/valkyrie_b_bold_italic.woff2') format('woff2'); font-style: italic; font-weight: bold; }
+
+/* @font-face { font-family: HermesMaia; font-display: swap; src: url('/hermes_maia_4_regular.woff2') format('woff2'); font-weight: 400; }
+@font-face { font-family: HermesMaia; font-display: swap; src: url('/hermes_maia_4_italic.woff2') format('woff2'); font-style: italic; font-weight: 400; }
+@font-face { font-family: HermesMaia; font-display: swap; src: url('/hermes_maia_6_regular.woff2') format('woff2'); font-weight: 600; }
+@font-face { font-family: HermesMaia; font-display: swap; src: url('/hermes_maia_8_italic.woff2') format('woff2'); font-style: italic; font-weight: 800; }
+
+@font-face { font-family: FiraMono; font-display: swap; src: url('/FiraMono-Regular.woff2') format('woff2'); size-adjust: 90%; }
+@font-face { font-family: FiraMono; font-display: swap; src: url('/FiraMono-Bold.woff2') format('woff2'); font-weight: bold; size-adjust: 90%; } */
+
+.vp-doc div[class*='language-'] {
+  margin-left: -24px;
+  &:not(:hover) {
+    background-color: transparent;
+  }
+  & > button.copy {
+    display: none;
   }
 }

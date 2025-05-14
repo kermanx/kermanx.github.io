@@ -1,7 +1,4 @@
 import { withMermaid } from "vitepress-plugin-mermaid";
-import Font from "vite-plugin-font";
-import fg from "fast-glob";
-import { basename } from "path";
 
 export default withMermaid({
   title: "_Kerman",
@@ -33,22 +30,22 @@ export default withMermaid({
   },
   vite: {
     plugins: [
-      Font.vite({
-        scanFiles: [
-          ".vitepress/config.mts",
-          ".vitepress/theme/**/*",
-          "notes/**/*",
-          "weekly/**/*",
-          "index.md",
-        ],
-      }),
+      // Font.vite({
+      //   scanFiles: [
+      //     ".vitepress/config.mts",
+      //     ".vitepress/theme/**/*",
+      //     "notes/**/*",
+      //     "weekly/**/*",
+      //     "index.md",
+      //   ],
+      // }),
     ],
   },
   markdown: {
-    theme: "dark-plus",
+    theme: "light-plus",
     math: true,
   },
-  appearance: "force-dark",
+  appearance: false,
   head: [
     [
       "link",
