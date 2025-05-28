@@ -1,5 +1,6 @@
 import type { Theme } from 'vitepress'
 import DefaultTheme from 'vitepress/theme'
+import 'uno.css'
 import './style.css'
 import Layout from './Layout.vue'
 

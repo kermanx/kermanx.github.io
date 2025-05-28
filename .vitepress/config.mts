@@ -1,4 +1,11 @@
 import { withMermaid } from "vitepress-plugin-mermaid";
+import UnoCSS from "unocss/vite";
+import {
+  presetIcons,
+  presetWind3,
+  presetAttributify,
+  transformerDirectives,
+} from "unocss";
 
 export default withMermaid({
   title: "_Kerman",
@@ -10,6 +17,10 @@ export default withMermaid({
         text: "Home",
         link: "/",
       },
+      {
+        text: "PL",
+        link: "/PL/",
+      }
       // {
       //   text: "Notes",
       //   items: [
@@ -30,15 +41,11 @@ export default withMermaid({
   },
   vite: {
     plugins: [
-      // Font.vite({
-      //   scanFiles: [
-      //     ".vitepress/config.mts",
-      //     ".vitepress/theme/**/*",
-      //     "notes/**/*",
-      //     "weekly/**/*",
-      //     "index.md",
-      //   ],
-      // }),
+      UnoCSS({
+        inspector: false,
+        presets: [presetWind3(), presetAttributify(), presetIcons()],
+        transformers: [transformerDirectives()],
+      }),
     ],
   },
   markdown: {
