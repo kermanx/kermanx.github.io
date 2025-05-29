@@ -68,31 +68,9 @@ mjx-container {
   }
 }
 
-:root {
-  overflow-y: scroll;
+* {
   scrollbar-width: thin;
 }
-
-@supports selector(::-webkit-scrollbar-thumb) {
-  :root {
-    scrollbar-width: unset;
-  }
-
-  :root::-webkit-scrollbar {
-    width: 8px;
-  }
-
-  :root::-webkit-scrollbar-track {
-    background: #2e2e32;
-  }
-
-  :root::-webkit-scrollbar-thumb {
-    background-color: #555;
-    border-radius: 10px;
-    border: 2px solid #2e2e32;
-  }
-}
-
 
 @font-face { font-family: Valkyrie; font-display: swap; src: url('./fonts/valkyrie_b_regular.woff2') format('woff2'); }
 @font-face { font-family: Valkyrie; font-display: swap; src: url('./fonts/valkyrie_b_italic.woff2') format('woff2'); font-style: italic; }
@@ -115,4 +93,13 @@ mjx-container {
   & > button.copy {
     display: none;
   }
+}
+
+.VPNav {
+  backdrop-filter: blur(12px);
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.VPDoc:not(.has-sidebar) {
+  padding-top: 96px !important;
 }
