@@ -1,12 +1,12 @@
-# Programming Language
+# Programming Languages
 
 <div class="grid grid-cols-[auto_1fr] gap-4 py-6">
   <template v-for="{ name, link }, day in data" :key="day">
     <div>
-      <a :href="link" target="_blank">{{ day }}</a>
+      {{ day }}
     </div>
     <div>
-      {{ name }}
+      <a :href="link" target="_blank">{{ name }}</a>
     </div>
   </template>
 </div>

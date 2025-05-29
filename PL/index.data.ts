@@ -1,6 +1,7 @@
 import { readdirSync } from 'node:fs';
 
 export default {
+  watch: ['./*.md'],
   load() {
     const days: {
       [date: string]: {

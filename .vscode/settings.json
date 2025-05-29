@@ -1,0 +1,13 @@
+{
+  "github.copilot.enable": {
+    "markdown": false
+  },
+  "[markdown]": {
+    "editor.wordWrap": "on",
+    "editor.quickSuggestions": {
+      "other": "off",
+      "comments": "off",
+      "strings": "off"
+    }
+  }
+}

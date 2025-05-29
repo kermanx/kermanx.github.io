@@ -8,6 +8,7 @@
   --vp-nav-bg-color: transparent;
   --vp-code-block-bg: #f6f6f7AA;
   --vp-code-lang-color: transparent;
+  --vp-code-line-height: 1.4;
 }
 
 body {
@@ -109,7 +110,7 @@ mjx-container {
 .vp-doc div[class*='language-'] {
   margin-left: -24px;
   &:not(:hover) {
-    background-color: transparent;
+    background-color: #f6f6f777;
   }
   & > button.copy {
     display: none;

@@ -6,6 +6,7 @@ import {
   presetAttributify,
   transformerDirectives,
 } from "unocss";
+import mslTmLanguage from "./syntaxes/msl.tmLanguage.json";
 
 export default withMermaid({
   title: "_Kerman",
@@ -51,6 +52,7 @@ export default withMermaid({
   markdown: {
     theme: "light-plus",
     math: true,
+    languages: [mslTmLanguage as any],
   },
   appearance: false,
   head: [
