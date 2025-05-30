@@ -11,9 +11,11 @@
   --vp-code-line-height: 1.4;
 }
 
-body {
-  line-height: 1.45;
-  font-size: 20px;
+@media (min-width: 530px) {
+  body {
+    line-height: 1.45;
+    font-size: 20px;
+  }
 }
 
 .dark .VPContent {
@@ -52,6 +54,10 @@ mjx-container {
 
   div.divider > div.divider-line {
     display: none !important;
+  }
+
+  .VPDoc:not(.has-sidebar) {
+    padding-top: 96px !important;
   }
 }
 
@@ -100,6 +106,3 @@ mjx-container {
   background-color: rgba(255, 255, 255, 0.2);
 }
 
-.VPDoc:not(.has-sidebar) {
-  padding-top: 96px !important;
-}
