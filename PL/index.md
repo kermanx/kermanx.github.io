@@ -1,3 +1,8 @@
+---
+prev: false
+next: false
+---
+
 # Programming Languages
 
 <div class="grid grid-cols-[auto_1fr] gap-4 py-6">
@@ -6,7 +11,7 @@
       {{ day }}
     </div>
     <div>
-      <a :href="link" target="_blank">{{ name }}</a>
+      <a :href="link">{{ name }}</a>
     </div>
   </template>
 </div>
