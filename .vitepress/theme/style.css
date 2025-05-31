@@ -92,14 +92,21 @@ mjx-container {
 @font-face { font-family: FiraMono; font-display: swap; src: url('/FiraMono-Bold.woff2') format('woff2'); font-weight: bold; size-adjust: 90%; } */
 
 .vp-doc div[class*='language-'] {
-  margin-left: -24px;
+  margin-left: -16px;
   &:not(:hover) {
     background-color: #f6f6f777;
   }
   & > button.copy {
     display: none;
   }
+  & > pre {
+    padding: 20px 0;
+  }
+  & > pre > code {
+    padding: 0 20px;
+  }
 }
+
 
 .VPNav {
   backdrop-filter: blur(12px);
