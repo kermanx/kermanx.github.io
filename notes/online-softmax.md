@@ -22,7 +22,7 @@ for i in range(1, V+1):
 
 - May overflow due to the exponent.
 
-Safe version:
+## Safe version
 
 ```py
 m[0] = float('-inf')
