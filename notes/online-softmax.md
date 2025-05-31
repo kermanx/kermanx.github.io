@@ -1,3 +1,9 @@
+---
+sidebar: false
+prev: false
+next: false
+---
+
 # Online Normalizer Calculation for Softmax
 
 > by Maxim Milakov and Natalia Gimelshein, 2018
@@ -75,8 +81,8 @@ $$
 ```py
 m[0] = float('-inf')
 d[0] = 0
-u = [float('-inf') for _ in range(K+1)]
-p = [-1 for _ in range(K+1)]
+u = [float('-inf') for _ in range(K+2)]
+p = [-1 for _ in range(K+2)]
 for j in range(1, V+1):
   m[j] = max(m[j-1], x[j])
   d[j] = d[j-1] * e**(m[j-1] - m[j]) + e**(x[j] - m[j])
@@ -97,10 +103,10 @@ for i in range(1, k+1):
 ## Benchmark
 
 - Online softmax:
-  - V>1000: ~1.3x faster than safe softmax
-  - Close to naive softmax
+  - V>1000: ~1.3x faster than safe softmax.
+  - Close to naive softmax.
 - Softmax TopK Fused:
-  - K=5, V=25000: 5x = 2.5x (softmax) \* 2x (fusion)
-  - larger K, less improvement
+  - K=5, V=25000: 5x = 2.5x (softmax) \* 2x (fusion).
+  - Larger K, less improvement.
 
 > Smaller vector size: GPU is underutilized, and the performance is limited not by the memory bandwidth, but various latencies.
