@@ -8,6 +8,9 @@ importers:
 
   .:
     dependencies:
+      '@iconify-json/mynaui':
+        specifier: ^1.2.10
+        version: 1.2.10
       vitepress:
         specifier: ^1.6.3
         version: 1.6.3(@algolia/client-search@5.20.0)(@types/node@22.10.10)(markdown-it-mathjax3@4.3.2)(postcss@8.5.1)(search-insights@2.17.3)
@@ -331,6 +334,9 @@ packages:
     engines: {node: '>=12'}
     cpu: [x64]
     os: [win32]
+
+  '@iconify-json/mynaui@1.2.10':
+    resolution: {integrity: sha512-MXB2TXAEV+0+Brek8ht+2D8p3W4j21vFFCUEkqYMt9l/FDIVGlBe0h00IS6FlzbMpIbgAjxxXgrfGukfDr86tw==}
 
   '@iconify-json/simple-icons@1.2.21':
     resolution: {integrity: sha512-aqbIuVshMZ2fNEhm25//9DoKudboXF3CpoEQJJlHl9gVSVNOTr4cgaCIZvgSEYmys2HHEfmhcpoZIhoEFZS8SQ==}
@@ -2292,6 +2298,10 @@ snapshots:
 
   '@esbuild/win32-x64@0.21.5':
     optional: true
+
+  '@iconify-json/mynaui@1.2.10':
+    dependencies:
+      '@iconify/types': 2.0.0
 
   '@iconify-json/simple-icons@1.2.21':
     dependencies:
