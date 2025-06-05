@@ -4,11 +4,47 @@ prev: false
 next: false
 ---
 
-# Position Encoding
+# Positional Encoding
 
-## Contextual Position Encoding: Learning to Count What's Important
+## Sinusoidal
 
-> **CoPE**, https://arxiv.org/abs/2405.18719
+> [Attention is All You Need](https://arxiv.org/abs/1706.03762)
+
+$$
+\begin{aligned}
+PE(pos, 2i) &= \sin(pos / 10000^{2i / d_\text{model}}) \\
+PE(pos, 2i+1) &= \cos(pos / 10000^{2i / d_\text{model}})
+\end{aligned}
+$$
+
+Then add it to the input vectors.
+
+## RoPE
+
+> [Roformer: Enhanced transformer with rotary position embedding](https://arxiv.org/abs/2104.09864)
+
+$$
+\begin{equation}\scriptsize{\underbrace{\begin{pmatrix} \cos m\theta_0 & -\sin m\theta_0 & 0 & 0 & \cdots & 0 & 0 \\ \sin m\theta_0 & \cos m\theta_0 & 0 & 0 & \cdots & 0 & 0 \\ 0 & 0 & \cos m\theta_1 & -\sin m\theta_1 & \cdots & 0 & 0 \\ 0 & 0 & \sin m\theta_1 & \cos m\theta_1 & \cdots & 0 & 0 \\ \vdots & \vdots & \vdots & \vdots & \ddots & \vdots & \vdots \\ 0 & 0 & 0 & 0 & \cdots & \cos m\theta_{d/2-1} & -\sin m\theta_{d/2-1} \\ 0 & 0 & 0 & 0 & \cdots & \sin m\theta_{d/2-1} & \cos m\theta_{d/2-1} \\ \end{pmatrix}}_{\boldsymbol{W}_m} \begin{pmatrix}q_0 \\ q_1 \\ q_2 \\ q_3 \\ \vdots \\ q_{d-2} \\ q_{d-1}\end{pmatrix}}\end{equation}
+$$
+
+where $\theta_i = 10000^{-2(i-1)/d}$
+
+It works because $(\boldsymbol{W}_m \boldsymbol{q})^{\top}(\boldsymbol{W}_n \boldsymbol{k}) =  \boldsymbol{q}^{\top} \boldsymbol{W}_m^{\top}\boldsymbol{W}_n \boldsymbol{k} = \boldsymbol{q}^{\top} \boldsymbol{W}_{n-m} \boldsymbol{k}$
+
+## ALiBi
+
+> [Train Short, Test Long: Attention with Linear Biases Enables Input Length Extrapolation](https://arxiv.org/abs/2108.12409)
+
+![](assets/image-3.png)
+
+- Original attention score: $\operatorname{softmax}(\textbf{q}_i\textbf{K}^T)$
+- With AliBi: $\operatorname{softmax}(\textbf{q}_i\textbf{K}^T + m \cdot \left[-(i-1),\dots,-2,-1,0\right])$
+- $m$ is a const head-specific scalar: $2^{\frac{-8}{n}}$ for the $n$th head.
+- No positional encoding.
+
+## CoPE
+
+> [Contextual Position Encoding: Learning to Count What's Important](https://arxiv.org/abs/2405.18719)
 
 - Dynamically decide which tokens should be counted based on the context.
 - More flexible position addressing (e.g. i-th specific word, noun, or sentence).
@@ -45,12 +81,12 @@ _Optimized_: (Interacts with the query vector before interpolation)
 - Interpolating scalar attention contribution: $z_i\left[p_{i j}\right]=\left(p_{i j}-\left\lfloor p_{i j}\right\rfloor\right) z_i\left[\left\lceil p_{i j}\right\rceil\right]+\left(1-p_{i j}+\left\lfloor p_{i j}\right\rfloor\right) z_i\left[\left\lfloor p_{i j}\right\rfloor\right]$
 - $a_{i j}=\operatorname{Softmax}\left(q_i^T k_j+z_i\left[p_{i j}\right]\right)$
 
-## Forgetting Transformer: Softmax Attention with a Forget Gate
+## FoX
 
-> **FoX**, https://arxiv.org/abs/2503.02130
+> [Forgetting Transformer: Softmax Attention with a Forget Gate](https://arxiv.org/abs/2503.02130)
 
 - Dynamic down-weighting of past information.
-- No need of positional embeddings。
+- No need of position embeddings.
 - Compatible with FlashAttention.
 
 ### 1. Scalar Forget Gate
@@ -88,9 +124,9 @@ $$
 
 ![](assets/image-2.png)
 
-## Scaling Stick-Breaking Attention: An Efficient Implementation and In-depth Study
+## SBA
 
-> **SBA**, https://arxiv.org/abs/2410.17980
+> [Scaling Stick-Breaking Attention: An Efficient Implementation and In-depth Study](https://arxiv.org/abs/2410.17980)
 
 - Using the stick-breaking process as a replacement for softmax for attention.
 - Naturally incorporating recency bias.
@@ -143,4 +179,4 @@ By Log-Space Formulation.
    $A_{i,j} = exp(z_{i,j}-\sum_{k=i}^{j-1}log(1+exp(z_{k,j})))$
 
 3. Stabilized softplus:
-   $softplus(x)=\begin{cases}log(1+exp(x)) & \text{if } x\le15 \\ x & \text{otherwise}\end{cases}$
+   $\operatorname{softplus}(x)=\begin{cases}log(1+exp(x)) & \text{if } x\le15 \\ x & \text{otherwise}\end{cases}$
