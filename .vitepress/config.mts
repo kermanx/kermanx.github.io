@@ -7,6 +7,9 @@ import {
   transformerDirectives,
 } from "unocss";
 import mslTmLanguage from "./syntaxes/msl.tmLanguage.json";
+import typstTmLanguage from "./syntaxes/typst.tmLanguage.json";
+import typstCodeTmLanguage from "./syntaxes/typst-code.tmLanguage.json";
+import highlightInline from "./plugins/highlight-inline";
 
 export default withMermaid({
   title: "_Kerman",
@@ -52,7 +55,66 @@ export default withMermaid({
   markdown: {
     theme: "light-plus",
     math: true,
-    languages: [mslTmLanguage as any],
+    languages: [
+      mslTmLanguage as any,
+      {
+        ...typstTmLanguage,
+        "aliases": [
+          "Typst",
+          "typ"
+        ],
+        "tokenTypes": {
+          "punctuation.definition.string.begin.math.typst": "other",
+          "punctuation.definition.string.end.math.typst": "other"
+        },
+        "balancedBracketScopes": [
+          "meta.expr",
+          "meta.brace",
+          "markup.math.typst"
+        ],
+        "unbalancedBracketScopes": [
+          "markup.content.brace.typst",
+          "markup.raw.block.typst",
+          "markup.raw.inline.typst",
+          "string.other.label.typst",
+          "string.quoted.double.typst",
+          "constant.other.symbol.typst",
+          "constant.character.escape",
+          "comment.block.typst",
+          "comment.line.double-slash.typst"
+        ]
+      },
+      {
+        ...typstCodeTmLanguage,
+        "aliases": [
+          "Typst (Code Mode)",
+          "typc"
+        ],
+        "tokenTypes": {
+          "punctuation.definition.string.begin.math.typst": "other",
+          "punctuation.definition.string.end.math.typst": "other"
+        },
+        "balancedBracketScopes": [
+          "meta.expr",
+          "meta.brace",
+          "markup.math.typst"
+        ],
+        "unbalancedBracketScopes": [
+          "markup.content.brace.typst",
+          "markup.raw.block.typst",
+          "markup.raw.inline.typst",
+          "string.other.label.typst",
+          "string.quoted.double.typst",
+          "constant.other.symbol.typst",
+          "constant.character.escape",
+          "comment.block.typst",
+          "comment.line.double-slash.typst"
+        ]
+      },
+    ],
+    config: (md) => {
+      md.use(highlightInline);
+    },
   },
   appearance: false,
   head: [
