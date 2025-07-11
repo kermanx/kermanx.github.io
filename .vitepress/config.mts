@@ -9,6 +9,8 @@ import {
 import mslTmLanguage from "./syntaxes/msl.tmLanguage.json";
 import typstTmLanguage from "./syntaxes/typst.tmLanguage.json";
 import typstCodeTmLanguage from "./syntaxes/typst-code.tmLanguage.json";
+import mlirTmLanguage from "./syntaxes/mlir.tmLanguage.json";
+import tablegenTmLanguage from "./syntaxes/tablegen.tmLanguage.json"
 import highlightInline from "./plugins/highlight-inline";
 
 export default withMermaid({
@@ -111,6 +113,24 @@ export default withMermaid({
           "comment.line.double-slash.typst"
         ]
       },
+      {
+        ...mlirTmLanguage,
+        "id": "mlir",
+        "aliases": [
+          "mlir"
+        ],
+        "extensions": [
+          ".mlir",
+          ".mlirbc"
+        ],
+      },
+      {
+        ...tablegenTmLanguage,
+        "aliases": [
+          "tablegen"
+        ],
+
+      }
     ],
     config: (md) => {
       md.use(highlightInline);
