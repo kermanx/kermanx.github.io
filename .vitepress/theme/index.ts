@@ -18,7 +18,7 @@ export default {
     ]
     
     const assignColorsToLinks = () => {
-      const indexPageLinks = document.querySelectorAll('.index-page a')
+      const indexPageLinks = document.querySelectorAll('.index-page .VPDoc a')
       indexPageLinks.forEach((link, index) => {
         const color = colors[index % colors.length]
         ;(link as HTMLElement).style.setProperty('--hover-color', color)

@@ -133,15 +133,15 @@ header div.wrapper .title {
 }
 
 
-.index-page ul {
+.index-page .VPDoc ul {
     list-style: none;
     padding-left: 0;
     padding-top: 4px;
 }
-.index-page li + li {
+.index-page .VPDoc li + li {
     margin-top: 4px;
 }
-.index-page a {
+.index-page .VPDoc a {
     color: #333;
     text-decoration-color: #aaa;
     --hover-color: #000;
