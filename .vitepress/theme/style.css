@@ -113,3 +113,6 @@ mjx-container {
   background-color: rgba(255, 255, 255, 0.2);
 }
 
+.MathJax[display] {
+  margin-left: 1em !important;
+}
