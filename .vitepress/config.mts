@@ -24,9 +24,17 @@ export default withMermaid({
         link: "/",
       },
       {
-        text: "PL",
+        text: "Notes",
+        link: "/notes/",
+      },
+      {
+        text: "PL Exploration",
         link: "/PL/",
-      }
+      },
+      {
+        text: "Projects",
+        link: "/projects/",
+      },
       // {
       //   text: "Notes",
       //   items: [
@@ -129,7 +137,6 @@ export default withMermaid({
         "aliases": [
           "tablegen"
         ],
-
       }
     ],
     config: (md) => {

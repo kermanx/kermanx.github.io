@@ -116,3 +116,38 @@ mjx-container {
 .MathJax[display] {
   margin-left: 1em !important;
 }
+
+@media (min-width: 768px) {
+  .vp-doc h1 {
+      letter-spacing: 0em;
+  }
+}
+
+header div.wrapper .title {
+  font-weight: 400;
+}
+
+.vp-doc a {
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
+}
+
+
+.index-page ul {
+    list-style: none;
+    padding-left: 0;
+    padding-top: 4px;
+}
+.index-page li + li {
+    margin-top: 4px;
+}
+.index-page a {
+    color: #333;
+    text-decoration-color: #aaa;
+    --hover-color: #000;
+    transition: color 0.3s ease, text-decoration-color 0.3s ease;
+    &:hover {
+        color: var(--hover-color);
+        text-decoration-color: var(--hover-color);
+    }
+}

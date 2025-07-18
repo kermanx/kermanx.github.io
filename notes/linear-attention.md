@@ -1,6 +1,6 @@
 ---
 sidebar: false
-prev: false
+prev: /notes/
 next: false
 ---
 

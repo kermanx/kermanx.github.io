@@ -5,5 +5,9 @@ next: false
 
 # Hi there
 
-This is a random website for personal use (not a blog).\
-Please visit my [GitHub profile](https://github.com/kermanx) for actual content.
+This is a random website.
+
+
+[GitHub](https://github.com/kermanx) .
+[Mail](mailto:kermanx@qq.com) .
+[Twitter](https://x.com/kermanx_)

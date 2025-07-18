@@ -3,6 +3,8 @@ import DefaultTheme from 'vitepress/theme'
 // @ts-expect-error
 import { useSidebar } from 'vitepress/dist/client/theme-default/composables/sidebar'
 
+import ArtPlum from './components/ArtPlum.vue'
+
 const { Layout } = DefaultTheme
 
 const {
@@ -56,6 +58,7 @@ const onTouchEnd = (e: TouchEvent): void => {
       </button>
     </template>
   </Layout>
+  <ArtPlum />
 </template>
 
 <style scoped>

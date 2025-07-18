@@ -1,3 +1,9 @@
+---
+sidebar: false
+prev: /notes/
+next: false
+---
+
 # Static Program Analysis
 
 Book: https://users-cs.au.dk/amoeller/spa/
