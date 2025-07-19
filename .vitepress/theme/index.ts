@@ -11,13 +11,12 @@ export default {
   enhanceApp({ app, router, siteData }) {
     app.component('ExtLink', ExtLink)
     
-    // Persistent color assignment for each link
-    const colors = [
-      '#3498db', '#2ecc71', '#9b59b6', '#1abc9c', 
-      '#4ecdc4', '#45b7d1', '#96ceb4', '#a29bfe'
-    ]
-    
     const assignColorsToLinks = () => {
+      const colors = [
+        '#3498db', '#2ecc71', '#9b59b6', '#1abc9c', 
+        '#45b7d1', '#a29bfe'
+      ].sort(() => Math.random() - 0.5)
+
       const indexPageLinks = document.querySelectorAll('.index-page .VPDoc a')
       indexPageLinks.forEach((link, index) => {
         const color = colors[index % colors.length]

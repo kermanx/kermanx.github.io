@@ -112,7 +112,14 @@ $$
 
 ## References
 
-- Sonta. "Zhihu answer" https://www.zhihu.com/question/9740764576/answer/80735153803
-- Katharopoulos A., Vyas A., Pappas N., Fleuret F. "Transformers are RNNs: Fast Autoregressive Transformers with Linear Attention." https://arxiv.org/abs/2006.16236
-- Vyas A., Katharopoulos A., Fleuret F. "Transformer Quality in Linear Time." https://arxiv.org/abs/2202.10447
-- Li Y., Peng H., Chen X., et al. "Gated Slot Attention for Efficient Linear-Time Sequence Modeling." https://arxiv.org/abs/2409.07146
+<div class="references">
+
+Sonta. "Zhihu answer." https://www.zhihu.com/question/9740764576/answer/80735153803
+
+Katharopoulos A., Vyas A., Pappas N., Fleuret F. "Transformers are RNNs: Fast Autoregressive Transformers with Linear Attention." https://arxiv.org/abs/2006.16236
+
+Vyas A., Katharopoulos A., Fleuret F. "Transformer Quality in Linear Time." https://arxiv.org/abs/2202.10447
+
+Li Y., Peng H., Chen X., et al. "Gated Slot Attention for Efficient Linear-Time Sequence Modeling." https://arxiv.org/abs/2409.07146
+
+</div>

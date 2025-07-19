@@ -4,9 +4,9 @@ next: false
 pageClass: index-page
 ---
 
-# Programming Languages
+# Programming Language Exploration
 
-<div class="grid grid-cols-[auto_1fr] gap-x-6 gap-y-1 py-6">
+<div class="grid grid-cols-[auto_1fr] gap-x-6 gap-y-2 py-6 px-2px">
   <template v-for="{ name, link }, day in data" :key="day">
     <div>
       {{ day }}

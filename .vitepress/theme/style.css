@@ -135,19 +135,31 @@ header div.wrapper .title {
 
 .index-page .VPDoc ul {
     list-style: none;
-    padding-left: 0;
+    padding-left: 2px;
     padding-top: 4px;
 }
 .index-page .VPDoc li + li {
-    margin-top: 4px;
+    margin-top: 7px;
 }
 .index-page .VPDoc a {
     color: #333;
     text-decoration-color: #aaa;
+    text-underline-offset: 5px;
     --hover-color: #000;
     transition: color 0.3s ease, text-decoration-color 0.3s ease;
     &:hover {
         color: var(--hover-color);
         text-decoration-color: var(--hover-color);
     }
+}
+
+.vp-doc .references {
+  font-size: 0.8em;
+  word-break: break-word;
+  text-indent: -1em;
+  padding-left: 1em;
+  p {
+    line-height: 18px;
+    margin: 8px 0;
+  }
 }
