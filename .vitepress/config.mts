@@ -145,11 +145,27 @@ export default withMermaid({
   },
   appearance: false,
   head: [
+    // [
+    //   "link",
+    //   {
+    //     rel: "icon",
+    //     href: "/favicon.ico",
+    //   },
+    // ],
     [
       "link",
       {
         rel: "icon",
-        href: "/favicon.ico",
+        href: "/favicon-dark.svg",
+        media: "(prefers-color-scheme: dark)",
+      },
+    ],
+    [
+      "link",
+      {
+        rel: "icon",
+        href: "/favicon-light.svg",
+        media: "(prefers-color-scheme: light)",
       },
     ],
     [
