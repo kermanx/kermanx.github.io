@@ -145,13 +145,13 @@ export default withMermaid({
   },
   appearance: false,
   head: [
-    // [
-    //   "link",
-    //   {
-    //     rel: "icon",
-    //     href: "/favicon.ico",
-    //   },
-    // ],
+    [
+      "link",
+      {
+        rel: "icon",
+        href: "/favicon.ico",
+      },
+    ],
     [
       "link",
       {
@@ -164,7 +164,7 @@ export default withMermaid({
       "link",
       {
         rel: "icon",
-        href: "/favicon-light.svg",
+        href: "/favicon.svg",
         media: "(prefers-color-scheme: light)",
       },
     ],

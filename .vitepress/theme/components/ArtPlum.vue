@@ -1,7 +1,7 @@
 <script setup lang='ts'>
 // Credit @antfu
 
-import { useRafFn, useWindowSize, type Fn } from '@vueuse/core'
+import { useRafFn, type Fn } from '@vueuse/core'
 import { ref, reactive, onMounted, computed } from 'vue'
 
 const r180 = Math.PI
@@ -12,7 +12,7 @@ const color = '#88888825'
 const el = ref<HTMLCanvasElement | null>(null)
 
 const { random } = Math
-const size = reactive(useWindowSize())
+const size = reactive({ width: 1000, height: 1000 })
 
 const start = ref<Fn>(() => {})
 const MIN_BRANCH = 90
@@ -80,7 +80,7 @@ onMounted(async () => {
     const rate = 
     counter.value <= 20 ? 0.8 :
     counter.value <= MIN_BRANCH
-      ? 0.61
+      ? 0.62
       : 0.5
 
     // left branch
@@ -153,7 +153,7 @@ const mask = computed(() => 'radial-gradient(circle, transparent, black);')
 
 <template>
   <div
-    class="art-plum hidden fixed top-0 bottom-0 left-0 right-0 pointer-events-none print:hidden"
+    class="art-plum hidden fixed w-1000px h-1000px bottom-0 right-0 pointer-events-none print:hidden"
     style="z-index: -1"
     :style="`mask-image: ${mask};--webkit-mask-image: ${mask};`"
   >
