@@ -1,6 +1,8 @@
 ---
 sidebar: false
-prev: /notes/
+prev:
+  text: "Notes"
+  link: "/notes/"
 next: false
 ---
 

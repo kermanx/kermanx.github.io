@@ -153,10 +153,16 @@ const mask = computed(() => 'radial-gradient(circle, transparent, black);')
 
 <template>
   <div
-    class="fixed top-0 bottom-0 left-0 right-0 pointer-events-none print:hidden"
+    class="art-plum hidden fixed top-0 bottom-0 left-0 right-0 pointer-events-none print:hidden"
     style="z-index: -1"
     :style="`mask-image: ${mask};--webkit-mask-image: ${mask};`"
   >
     <canvas ref="el" width="400" height="400" />
   </div>
 </template>
+
+<style>
+#app:has(.home-page) .art-plum, #app:has(.index-page) .art-plum {
+  display: block;
+}
+</style>

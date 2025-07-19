@@ -1,6 +1,8 @@
 ---
 sidebar: false
-prev: /notes/
+prev:
+  text: "Notes"
+  link: "/notes/"
 next: false
 ---
 
@@ -92,7 +94,7 @@ This is very general and encompasses many recent RNNs with 2D hidden states:
 
 ![](./assets/gla-table.png)
 
-[*Gated Slot Attention for Efficient Linear-Time Sequence Modeling*](https://arxiv.org/abs/2409.07146) also proposed its GLA:
+[*Gated Linear Attention Transformers with Hardware-Efficient Training*](https://arxiv.org/abs/2312.06635) also proposed its GLA:
 
 - Recurrent form:
 
@@ -120,6 +122,6 @@ Katharopoulos A., Vyas A., Pappas N., Fleuret F. "Transformers are RNNs: Fast Au
 
 Vyas A., Katharopoulos A., Fleuret F. "Transformer Quality in Linear Time." https://arxiv.org/abs/2202.10447
 
-Li Y., Peng H., Chen X., et al. "Gated Slot Attention for Efficient Linear-Time Sequence Modeling." https://arxiv.org/abs/2409.07146
+Yang S.L., Wang B.L., et al. "Gated Linear Attention Transformers with Hardware-Efficient Training." https://arxiv.org/abs/2312.06635
 
 </div>

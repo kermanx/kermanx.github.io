@@ -8,7 +8,7 @@ pageClass: index-page
 
 - [Slidev.js](https://github.com/slidevjs/slidev)
 - [reactive-vscode](https://github.com/KermanX/reactive-vscode)
-- [Experimental Tree Shaker (WIP)](https://github.com/KermanX/tree-shaker)
+- [JsShaker](https://github.com/KermanX/tree-shaker)
 - [simple\_ts](https://github.com/kermanx/simple_ts)
 - [js.rs](https://github.com/kermanx/js.rs)
 - [Refina](https://github.com/refinajs/refina)
