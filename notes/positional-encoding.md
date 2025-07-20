@@ -176,7 +176,7 @@ By Log-Space Formulation.
 > [Roformer: Enhanced transformer with rotary position embedding](https://arxiv.org/abs/2104.09864)
 
 $$
-\begin{equation}\scriptsize{\underbrace{\begin{pmatrix} \cos m\theta_0 & -\sin m\theta_0 & 0 & 0 & \cdots & 0 & 0 \\ \sin m\theta_0 & \cos m\theta_0 & 0 & 0 & \cdots & 0 & 0 \\ 0 & 0 & \cos m\theta_1 & -\sin m\theta_1 & \cdots & 0 & 0 \\ 0 & 0 & \sin m\theta_1 & \cos m\theta_1 & \cdots & 0 & 0 \\ \vdots & \vdots & \vdots & \vdots & \ddots & \vdots & \vdots \\ 0 & 0 & 0 & 0 & \cdots & \cos m\theta_{d/2-1} & -\sin m\theta_{d/2-1} \\ 0 & 0 & 0 & 0 & \cdots & \sin m\theta_{d/2-1} & \cos m\theta_{d/2-1} \\ \end{pmatrix}}_{\boldsymbol{W}_m} \begin{pmatrix}q_0 \\ q_1 \\ q_2 \\ q_3 \\ \vdots \\ q_{d-2} \\ q_{d-1}\end{pmatrix}}\end{equation}
+\begin{equation}\scriptsize{\underbrace{\begin{pmatrix} \cos m\theta_1 & -\sin m\theta_1 & 0 & 0 & \cdots & 0 & 0 \\ \sin m\theta_1 & \cos m\theta_1 & 0 & 0 & \cdots & 0 & 0 \\ 0 & 0 & \cos m\theta_2 & -\sin m\theta_2 & \cdots & 0 & 0 \\ 0 & 0 & \sin m\theta_2 & \cos m\theta_2 & \cdots & 0 & 0 \\ \vdots & \vdots & \vdots & \vdots & \ddots & \vdots & \vdots \\ 0 & 0 & 0 & 0 & \cdots & \cos m\theta_{d/2} & -\sin m\theta_{d/2} \\ 0 & 0 & 0 & 0 & \cdots & \sin m\theta_{d/2} & \cos m\theta_{d/2} \\ \end{pmatrix}}_{\boldsymbol{W}_m} \begin{pmatrix}q_0 \\ q_1 \\ q_2 \\ q_3 \\ \vdots \\ q_{d-2} \\ q_{d-1}\end{pmatrix}}\end{equation}
 $$
 
 where $\theta_i = 10000^{-2(i-1)/d}$
@@ -294,7 +294,27 @@ $$
 | Method | Commutativity | Extra Parameters | Extra Time Complexity |
 | :------------------------- | :------------ | :--------------- | :-------------------- |
 | APE                        | —             | $nd$             | $O(nd)$               |
-| Vanilla RoPE               | Yes           | 0                | $O(Lnd(\mathbf{b}N + b^2 + \frac{d}{h})) \approx O(\frac{Lnd^2}{h})$ |
-| LieRE                      | Commonly Not  | $LNd\mathbf{b}$  | $O(Lnd(\mathbf{b}N + b^2 + \frac{d}{h}))$ |
-| ComRoPE-AP          | Yes           | $Ld\mathbf{b}$   | $O(Lnd(\mathbf{b}N + b^2 + \frac{d}{h}))$ |
-| ComRoPE-LD          | Yes           | $Ld(\mathbf{b} + \frac{N}{b})$ | $O(Lnd(\mathbf{b}N + b^2 + \frac{d}{h}))$ |
+| Vanilla RoPE               | Yes           | 0                | $O(Lnd(bN + b^2 + \frac{d}{h})) \approx O(\frac{Lnd^2}{h})$ |
+| LieRE                      | Commonly Not  | $LNdb$  | $O(Lnd(bN + b^2 + \frac{d}{h}))$ |
+| ComRoPE-AP          | Yes           | $Ldb$   | $O(Lnd(bN + b^2 + \frac{d}{h}))$ |
+| ComRoPE-LD          | Yes           | $Ld(b + \frac{N}{b})$ | $O(Lnd(bN + b^2 + \frac{d}{h}))$ |
+
+## TaPE
+
+> conTextualized equivariAnt Position Embedding
+> 
+> [Rethinking Addressing in Language Models via Contexualized Equivariant Positional Encoding](https://arxiv.org/abs/2501.00712)
+
+- Permutation Equivariance
+
+## CaPE
+
+> [CAPE: Context-Adaptive Positional Encoding for Length Extrapolation](https://arxiv.org/abs/2405.14722v1)
+
+- $\textbf A_\text{CAPE}(\textbf X) = \textbf X \textbf W_Q(\textbf X \textbf W_K)^\top + f(\textbf X \textbf W_Q(\textbf X \textbf W_K)^\top, \textbf B)$
+- $f$ is a two-layer LeakyReLU neural network.
+- $\mathbf B$ is positional bias matrices (e.g. ALiBi and FIRE).
+
+## FIRE
+
+## FoPE
