@@ -4,6 +4,7 @@ prev:
   text: "Notes"
   link: "/notes/"
 next: false
+outline: [2,3]
 ---
 
 # Positional Encoding
@@ -21,7 +22,15 @@ $$
 
 Then add it to the input vectors.
 
-## ALiBi
+## NoPE
+
+> [Length Generalization of Causal Transformers without Position Encoding](https://arxiv.org/abs/2404.12224)
+
+No positional encoding.
+
+## Additive
+
+### ALiBi
 
 > [Train Short, Test Long: Attention with Linear Biases Enables Input Length Extrapolation](https://arxiv.org/abs/2108.12409)
 
@@ -32,7 +41,96 @@ Then add it to the input vectors.
 - $m$ is a const head-specific scalar: $2^{\frac{-8}{n}}$ for the $n$th head.
 - No positional encoding.
 
-## CoPE
+### T5's RPE
+
+> [Exploring the Limits of Transfer Learning with a Unified Text-to-Text Transformer](https://arxiv.org/abs/1910.10683)
+
+$$
+\textbf B_{i,j} = r_{\operatorname{min}(i-j, K)}
+$$
+
+- $K$ is hyper-parameter.
+- $r_i$ are learnable scalars.
+
+### Kerpel
+
+> [KERPLE: Kernelized Relative Positional Embedding for Length Extrapolation](https://arxiv.org/abs/2205.09921)
+
+$$
+\textbf B_{i,j} = -r_1 \operatorname{log}(1+r_2 | i-j |)
+$$
+
+
+### Sandwich
+
+> [Dissecting Transformer Length Extrapolation via the Lens of Receptive Field Analysis](https://arxiv.org/abs/2212.10356)
+
+$$
+\textbf B_{i,j} = r_1 \sum_{k=1}^{r_2} \operatorname{cos}(\frac{i-j}{10000^{k/d'}})
+$$
+
+### FIRE
+
+> [Functional Interpolation for Relative Positions Improves Long Context Transformers](https://arxiv.org/abs/2310.04418)
+
+$\textbf B_{i,j} = f_\theta\left(\frac{\psi(i − j)}{\psi(\operatorname{max}\left\{L, i\right\})}\right)$
+
+   - $f_\theta: \mathbb R \to \mathbb R$ is MLP.
+   - $\phi: \mathbb N \to \mathbb R_+$ is monotonically increasing (e.g. $\phi(x) = \operatorname{log}(cx+1)$).
+   - $L > 0$ is a learnable scalar.
+
+### CaPE
+
+> [CAPE: Context-Adaptive Positional Encoding for Length Extrapolation](https://arxiv.org/abs/2405.14722v1)
+
+- $\textbf A_\text{CAPE}(\textbf X) = \textbf X \textbf W_Q(\textbf X \textbf W_K)^\top + f(\textbf X \textbf W_Q(\textbf X \textbf W_K)^\top, \textbf B)$
+- $f$ is a two-layer LeakyReLU neural network.
+- $\mathbf B$ is positional bias matrices (e.g. ALiBi and FIRE).
+
+### FoX
+
+> [Forgetting Transformer: Softmax Attention with a Forget Gate](https://arxiv.org/abs/2503.02130)
+
+- Dynamic down-weighting of past information.
+- No need of position embeddings.
+- Compatible with FlashAttention.
+
+1. Scalar Forget Gate
+
+   $$
+   f_t=\sigma\left(w_f^{\top} x_t+b_f\right)
+   $$
+
+   Where $w_f$ and $b_f$ are learnable and per-head (for multiple head attention).
+
+2. Cumulative Forget Factor
+
+   $$
+   \begin{aligned}
+   &F_{i j}=\prod_{l=j+1}^i f_l \space(1 \text{ if } i=j)\\
+   &B_{i j}=\log F_{i j}=\sum_{l=j+1}^i \log f_l
+   \end{aligned}
+   $$
+<!-- 
+3. Forgetting Attention Output
+
+   - A modified version of Softmax: The forget factor $D_{i j}$ is added to logits.
+
+   $$
+   o_i=\frac{\sum_{j=1}^i F_{i j} \exp \left(q_i^{\top} k_j\right) v_j}{\sum_{j=1}^i F_{i j} \exp \left(q_i^{\top} k_j\right)}=\frac{\sum_{j=1}^i \exp \left(q_i^{\top} k_j+D_{i j}\right) v_j}{\sum_{j=1}^i \exp \left(q_i^{\top} k_j+D_{i j}\right)}
+   $$
+
+   _Matrix Form_:
+
+   $$
+   O=\operatorname{softmax}\left(Q K^{\top}+D\right) V \in \mathbb{R}^{L \times d}
+   $$ -->
+
+#### FoX (Pro)
+
+![](assets/image-2.png)
+
+### CoPE
 
 > [Contextual Position Encoding: Learning to Count What's Important](https://arxiv.org/abs/2405.18719)
 
@@ -41,78 +139,36 @@ Then add it to the input vectors.
 
 ![](assets/image-1.png)
 
-### 1. Gate Computation
+1. Gate Computation
 
-$$
-g_{i j}=\sigma\left(q_i^T k_j\right)
-$$
+   $$
+   g_{i j}=\sigma\left(q_i^T k_j\right)
+   $$
 
-### 2. Contextual Position Calculation
+2. Contextual Position Calculation
 
-$$
-p_{i j}=\sum_{k=j}^i g_{i k}
-$$
+   $$
+   p_{i j}=\sum_{k=j}^i g_{i k}
+   $$
 
-### 3. Position Embedding Interpolation
+3. Position Embedding Interpolation
 
-- Because $p_{i j}$ may be a fraction, interpolation is used to compute the embedding vector.
-- For each integer position, a learnable embedding vector $e[p]$ is used.
-- For decimal position: $e\left[p_{i j}\right]=\left(p_{i j}-\left\lfloor p_{i j}\right\rfloor\right) e\left[\left[p_{i j}\right]\right]+\left(1-p_{i j}+\left\lfloor p_{i j}\right\rfloor\right) e\left[\left\lfloor p_{i j}\right\rfloor\right]$
+   - Because $p_{i j}$ may be a fraction, interpolation is used to compute the embedding vector.
+   - For each integer position, a learnable embedding vector $e[p]$ is used.
+   - For decimal position: $e\left[p_{i j}\right]=\left(p_{i j}-\left\lfloor p_{i j}\right\rfloor\right) e\left[\left[p_{i j}\right]\right]+\left(1-p_{i j}+\left\lfloor p_{i j}\right\rfloor\right) e\left[\left\lfloor p_{i j}\right\rfloor\right]$
 
-### 4. Attention Calculation
+4. Attention Calculation
 
-_Raw_:
+   _Raw_:
 
-- $a_{i j}=\operatorname{Softmax}\left(q_i^T k_j+q_i^T e\left[p_{i j}\right]\right)$
+   - $a_{i j}=\operatorname{Softmax}\left(q_i^T k_j+q_i^T e\left[p_{i j}\right]\right)$
 
-_Optimized_: (Interacts with the query vector before interpolation)
+   _Optimized_: (Interacts with the query vector before interpolation)
 
-- Pre-computed for all integer positions: $z_i[p]=q_i^T e[p]$
-- Interpolating scalar attention contribution: $z_i\left[p_{i j}\right]=\left(p_{i j}-\left\lfloor p_{i j}\right\rfloor\right) z_i\left[\left\lceil p_{i j}\right\rceil\right]+\left(1-p_{i j}+\left\lfloor p_{i j}\right\rfloor\right) z_i\left[\left\lfloor p_{i j}\right\rfloor\right]$
-- $a_{i j}=\operatorname{Softmax}\left(q_i^T k_j+z_i\left[p_{i j}\right]\right)$
+   - Pre-computed for all integer positions: $z_i[p]=q_i^T e[p]$
+   - Interpolating scalar attention contribution: $z_i\left[p_{i j}\right]=\left(p_{i j}-\left\lfloor p_{i j}\right\rfloor\right) z_i\left[\left\lceil p_{i j}\right\rceil\right]+\left(1-p_{i j}+\left\lfloor p_{i j}\right\rfloor\right) z_i\left[\left\lfloor p_{i j}\right\rfloor\right]$
+   - $a_{i j}=\operatorname{Softmax}\left(q_i^T k_j+z_i\left[p_{i j}\right]\right)$
 
-## FoX
-
-> [Forgetting Transformer: Softmax Attention with a Forget Gate](https://arxiv.org/abs/2503.02130)
-
-- Dynamic down-weighting of past information.
-- No need of position embeddings.
-- Compatible with FlashAttention.
-
-### 1. Scalar Forget Gate
-
-$$
-f_t=\sigma\left(w_f^{\top} x_t+b_f\right)
-$$
-
-Where $w_f$ and $b_f$ are learnable and per-head (for multiple head attention).
-
-### 2. Cumulative Forget Factor
-
-$$
-\begin{aligned}
-&F_{i j}=\prod_{l=j+1}^i f_l \space(1 \text{ if } i=j)\\
-&D_{i j}=\log F_{i j}=\sum_{l=j+1}^i \log f_l
-\end{aligned}
-$$
-
-### 3. Forgetting Attention Output
-
-- A modified version of Softmax: The forget factor $D_{i j}$ is added to logits.
-
-$$
-o_i=\frac{\sum_{j=1}^i F_{i j} \exp \left(q_i^{\top} k_j\right) v_j}{\sum_{j=1}^i F_{i j} \exp \left(q_i^{\top} k_j\right)}=\frac{\sum_{j=1}^i \exp \left(q_i^{\top} k_j+D_{i j}\right) v_j}{\sum_{j=1}^i \exp \left(q_i^{\top} k_j+D_{i j}\right)}
-$$
-
-_Matrix Form_:
-
-$$
-O=\operatorname{softmax}\left(Q K^{\top}+D\right) V \in \mathbb{R}^{L \times d}
-$$
-
-### FoX (Pro)
-
-![](assets/image-2.png)
 
 ## SBA
 
@@ -122,56 +178,58 @@ $$
 - Naturally incorporating recency bias.
 - No need of positional encoding.
 
-### 1. Original Logits
+1. Original Logits
 
-$$
-z_{i j} = \frac{q_j^T k_i}{\sqrt{d_\text{head}}}
-$$
+   $$
+   z_{i j} = \frac{q_j^T k_i}{\sqrt{d_\text{head}}}
+   $$
 
-### 2. Breakpoint Possibility
+2. Breakpoint Possibility
 
-$$
-\beta_{i j} = \sigma(z_{i j})
-$$
+   $$
+   \beta_{i j} = \sigma(z_{i j})
+   $$
 
-### 3. Attention Weights
+3. Attention Weights
 
-- From $j$ to $i$ (backwards in time).
+   - From $j$ to $i$ (backwards in time).
 
-$$
-A_{i,j}=\beta_{i,j}\prod_{i<k<j}(1-\beta_{k,j})
-$$
+   $$
+   A_{i,j}=\beta_{i,j}\prod_{i<k<j}(1-\beta_{k,j})
+   $$
 
-### 4. Output
+4. Output
 
-$$
-o_{j}=\sum_{i=1}^{j-1}A_{i,j}v_{i}
-$$
+   $$
+   o_{j}=\sum_{i=1}^{j-1}A_{i,j}v_{i}
+   $$
 
-### Numerically Stable Implementation
+- Numerically Stable Implementation
 
-By Log-Space Formulation.
+   By Log-Space Formulation.
 
-1. Sigmoid in log-space:
+   1. Sigmoid in log-space:
 
-   $log~\beta_{i,j} = log~\sigma(z_{i,j}) = z_{i,j}-log(1+exp(z_{i,j}))$
+      $log~\beta_{i,j} = log~\sigma(z_{i,j}) = z_{i,j}-log(1+exp(z_{i,j}))$
 
-   $log(1-\beta_{k,j}) = log(1-\sigma(z_{k,j})) = -log(1+exp(z_{k,j}))$
+      $log(1-\beta_{k,j}) = log(1-\sigma(z_{k,j})) = -log(1+exp(z_{k,j}))$
 
-   Where $log(1+exp(x))$ is commonly known as softplus(x).
+      Where $log(1+exp(x))$ is commonly known as softplus(x).
 
-2. Compute $A_{i,j}$ in log-space:
+   2. Compute $A_{i,j}$ in log-space:
 
-   $A_{i,j} = exp(log~\beta_{i,j}+\sum_{k=i+1}^{j-1}log(1-\beta_{k,j}))$
+      $A_{i,j} = exp(log~\beta_{i,j}+\sum_{k=i+1}^{j-1}log(1-\beta_{k,j}))$
 
-   $A_{i,j} = exp(z_{i,j}-log(1+exp(z_{i,j}))-\sum_{k=i+1}^{j-1}log(1+exp(z_{k,j})))$
+      $A_{i,j} = exp(z_{i,j}-log(1+exp(z_{i,j}))-\sum_{k=i+1}^{j-1}log(1+exp(z_{k,j})))$
 
-   $A_{i,j} = exp(z_{i,j}-\sum_{k=i}^{j-1}log(1+exp(z_{k,j})))$
+      $A_{i,j} = exp(z_{i,j}-\sum_{k=i}^{j-1}log(1+exp(z_{k,j})))$
 
-3. Stabilized softplus:
-   $\operatorname{softplus}(x)=\begin{cases}log(1+exp(x)) & \text{if } x\le15 \\ x & \text{otherwise}\end{cases}$
+   3. Stabilized softplus:
+      $\operatorname{softplus}(x)=\begin{cases}log(1+exp(x)) & \text{if } x\le15 \\ x & \text{otherwise}\end{cases}$
 
-## RoPE
+## Rotary
+
+### RoPE
 
 > [Roformer: Enhanced transformer with rotary position embedding](https://arxiv.org/abs/2104.09864)
 
@@ -183,7 +241,7 @@ where $\theta_i = 10000^{-2(i-1)/d}$
 
 It works because $(\boldsymbol{W}_m \boldsymbol{q})^{\top}(\boldsymbol{W}_n \boldsymbol{k}) =  \boldsymbol{q}^{\top} \boldsymbol{W}_m^{\top}\boldsymbol{W}_n \boldsymbol{k} = \boldsymbol{q}^{\top} \boldsymbol{W}_{n-m} \boldsymbol{k}$
 
-## 2D-RoPE
+### 2D-RoPE
 
 > [Rotary Position Embedding for Vision Transformer](https://arxiv.org/abs/2403.13298v1)
 
@@ -196,7 +254,7 @@ $$
 \theta _t = 100^{-t / (d_\text{head} / 4)}, \text{where}\space t \in \left\{ 0, 1, \dots, d_\text{head} / 4 \right\}
 $$
 
-## LieRE
+### LieRE
 
 > [LieRE: Lie Rotational Positional Encodings](https://arxiv.org/abs/2406.10322)
 
@@ -212,7 +270,7 @@ $$
 
 - $Q_i' = \mathbf R(p_i) Q_i$, $K_i' = \mathbf R(p_i) K_i$
 
-## ComRoPE
+### ComRoPE
 
 > [ComRoPE: Scalable and Robust Rotary Position Embedding Parameterized by Trainable Commuting Angle Matrices](http://arxiv.org/abs/2506.03737)
 
@@ -299,6 +357,10 @@ $$
 | ComRoPE-AP          | Yes           | $Ldb$   | $O(Lnd(bN + b^2 + \frac{d}{h}))$ |
 | ComRoPE-LD          | Yes           | $Ld(b + \frac{N}{b})$ | $O(Lnd(bN + b^2 + \frac{d}{h}))$ |
 
+### FoPE
+
+> [Fourier Position Embedding: Enhancing Attention's Periodic Extension for Length Generalization](https://arxiv.org/abs/2412.17739)
+
 ## TaPE
 
 > conTextualized equivariAnt Position Embedding
@@ -306,15 +368,3 @@ $$
 > [Rethinking Addressing in Language Models via Contexualized Equivariant Positional Encoding](https://arxiv.org/abs/2501.00712)
 
 - Permutation Equivariance
-
-## CaPE
-
-> [CAPE: Context-Adaptive Positional Encoding for Length Extrapolation](https://arxiv.org/abs/2405.14722v1)
-
-- $\textbf A_\text{CAPE}(\textbf X) = \textbf X \textbf W_Q(\textbf X \textbf W_K)^\top + f(\textbf X \textbf W_Q(\textbf X \textbf W_K)^\top, \textbf B)$
-- $f$ is a two-layer LeakyReLU neural network.
-- $\mathbf B$ is positional bias matrices (e.g. ALiBi and FIRE).
-
-## FIRE
-
-## FoPE
