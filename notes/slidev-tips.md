@@ -4,6 +4,7 @@ prev:
   text: "Notes"
   link: "/notes/"
 next: false
+title: Slidev Tips
 ---
 
 # Slidev Tips [<span text-sm ml-2>中文版</span>](./slidev-tips-zh.md)

@@ -4,6 +4,7 @@ prev:
   text: "Notes"
   link: "/notes/"
 next: false
+title: Slidev 使用技巧
 ---
 
 # Slidev 使用技巧 [<span text-sm ml-2>English</span>](./slidev-tips.md)
