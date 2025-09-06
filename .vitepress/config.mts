@@ -15,7 +15,7 @@ import highlightInline from "./plugins/highlight-inline";
 
 export default withMermaid({
   title: "_Kerman",
-  description: "",
+  description: "This is a random website.",
   themeConfig: {
     siteTitle: "_Kerman",
     sidebar: [
