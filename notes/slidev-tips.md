@@ -220,4 +220,4 @@ Note that you only need to use this feature on a few elements—it is less effic
 
 ## 6. Need Some Inspiration?
 
-Check out https://antfu.me/talks to see masterpieces from the create of Slidev! The source code is also available on [GitHub](https://github.com/antfu/talks).
+Check out https://antfu.me/talks to see masterpieces from the creator of Slidev! The source code is also available on [GitHub](https://github.com/antfu/talks).
