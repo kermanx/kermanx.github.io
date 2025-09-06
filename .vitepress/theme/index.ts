@@ -4,12 +4,14 @@ import 'uno.css'
 import './style.css'
 import Layout from './Layout.vue'
 import ExtLink from './components/ExtLink.vue'
+import SlideContainer from './components/SlideContainer.vue'
 
 export default {
   extends: DefaultTheme,
   Layout,
   enhanceApp({ app, router, siteData }) {
     app.component('ExtLink', ExtLink)
+    app.component('SlideContainer', SlideContainer)
 
     const assignColorsToLinks = () => {
       const colors = [

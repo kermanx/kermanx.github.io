@@ -80,8 +80,6 @@ mjx-container {
 
 @font-face { font-family: Valkyrie; font-display: swap; src: url('./fonts/valkyrie_b_regular.woff2') format('woff2'); }
 @font-face { font-family: Valkyrie; font-display: swap; src: url('./fonts/valkyrie_b_italic.woff2') format('woff2'); font-style: italic; }
-@font-face { font-family: Valkyrie; font-display: swap; src: url('./fonts/valkyrie_b_bold.ttf') format('ttf'); font-weight: bold; }
-@font-face { font-family: Valkyrie; font-display: swap; src: url('./fonts/valkyrie_b_bold_italic.ttf') format('ttf'); font-style: italic; font-weight: bold; }
 
 /* @font-face { font-family: HermesMaia; font-display: swap; src: url('/hermes_maia_4_regular.woff2') format('woff2'); font-weight: 400; }
 @font-face { font-family: HermesMaia; font-display: swap; src: url('/hermes_maia_4_italic.woff2') format('woff2'); font-style: italic; font-weight: 400; }
@@ -162,4 +160,8 @@ header div.wrapper .title {
     line-height: 18px;
     margin: 8px 0;
   }
+}
+
+.vp-doc h1, .vp-doc h2, .vp-doc h3, .vp-doc h4, .vp-doc h5, .vp-doc h6 {
+  font-weight: 400;
 }
