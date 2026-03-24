@@ -9,6 +9,7 @@ pageClass: index-page
 - [Slidev.js](https://github.com/slidevjs/slidev)
 - [reactive-vscode](https://github.com/kermanx/reactive-vscode)
 - [JsShaker](https://github.com/kermanx/jsshaker)
+- [P2P Live Share](https://github.com/kermanx/p2p-live-share)
 - [simple\_ts](https://github.com/kermanx/simple_ts)
 - [js.rs](https://github.com/kermanx/js.rs)
 - [Refina](https://github.com/refinajs/refina)
