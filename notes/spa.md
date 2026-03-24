@@ -138,7 +138,7 @@ For monotonic function $f: L \to L$, $\text{LFP}(f) = \sqcup_{i=0}^\infty f^i(\b
 | May  | Reaching definitions  | Live variables        |
 | Must | Available expressions | Very busy expressions |
 
-![May&Must](assets/image.png)
+![May&Must](assets/must-may.png)
 
 Transfer function: $[[v]] = t_v(\text{JOIN}(v))$
 
